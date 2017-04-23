@@ -19,15 +19,15 @@ export default function statusChangeCallback(response) {
   } else {
     showFBLoginButton();
     // The person is not logged into your app or we are unable to tell.
-    document.getElementById('status').innerHTML = 'Please log ' +
-      'into this app.';
+    // document.getElementById('status').innerHTML = 'Please log ' +
+    //   'into this app.';
   }
 }
 
 function hideFBLoginButton() {
-  document.getElementById('fblogin').style.display = 'none';
+  document.getElementsByClassName('my-facebook-button')[0].style.display = 'none';
 }
 
 function showFBLoginButton() {
-  document.getElementById('fblogin').style.display; //('all');
+  document.getElementsByClassName('my-facebook-button')[0].style.display; //('all');
 }

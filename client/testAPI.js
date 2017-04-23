@@ -8,8 +8,8 @@ export default function testAPI() {
     console.log('pagesData: ', pagesData);
     console.log(response);
     console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
+    // document.getElementById('status').innerHTML =
+    //   'Thanks for logging in, ' + response.name + '!';
     //window.location.href = "http://localhost:3000/" + date;
     FB.Event.subscribe('auth.authResponseChange', auth_response_change_callback);
     FB.Event.subscribe('auth.statusChange', auth_status_change_callback);
