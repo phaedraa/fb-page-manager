@@ -42,7 +42,7 @@ var auth_status_change_callback = function(response) {
 // This function is called when someone finishes with the Login
 // Button.  See the onlogin handler attached to it in the sample
 // code below.
-window.checkLoginState = function checkLoginState() {
+function checkLoginState() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
@@ -51,13 +51,13 @@ window.checkLoginState = function checkLoginState() {
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '167040673631579',
-    cookie     : true,  // enable cookies to allow the server to access 
+    cookie     : true,  // enable cookies to allow the server to access
                         // the session
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.8' // use graph api version 2.8
   });
 
-  // Now that we've initialized the JavaScript SDK, we call 
+  // Now that we've initialized the JavaScript SDK, we call
   // FB.getLoginStatus().  This function gets the state of the
   // person visiting this page and can return one of three states to
   // the callback you provide.  They can be:
