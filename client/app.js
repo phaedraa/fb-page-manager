@@ -1,43 +1,4 @@
-// This is called with the results from from FB.getLoginStatus().
-function statusChangeCallback(response) {
-  console.log('statusChangeCallback');
-  console.log(response);
-  // The response object is returned with a status field that lets the
-  // app know the current login status of the person.
-  // Full docs on the response object can be found in the documentation
-  // for FB.getLoginStatus().
-  if (response.status === 'connected') {
-    // Logged into your app and Facebook.
-    testAPI();
-    hideFBLoginButton();
-    var uid = response.authResponse.userID;
-    var accessToken = response.authResponse.accessToken;
-    console.log('uid: ', uid);
-    console.log('accessToken', accessToken);
-  } else {
-    showFBLoginButton();
-    // The person is not logged into your app or we are unable to tell.
-    document.getElementById('status').innerHTML = 'Please log ' +
-      'into this app.';
-  }
-}
-
-function hideFBLoginButton() {
-  document.getElementById('fblogin').style.display = 'none';
-}
-
-function showFBLoginButton() {
-  document.getElementById('fblogin').style.display; //('all');
-}
-
-var auth_response_change_callback = function(response) {
-  console.log("auth_response_change_callback");
-  console.log(response);
-}
-
-var auth_status_change_callback = function(response) {
-  console.log("auth_status_change_callback: " + response.status);
-}
+import statusChangeCallback from './statusChangeCallback';
 
 // This function is called when someone finishes with the Login
 // Button.  See the onlogin handler attached to it in the sample
@@ -72,7 +33,6 @@ window.fbAsyncInit = function() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
-
 };
 
 // Load the SDK asynchronously
@@ -84,46 +44,3 @@ window.fbAsyncInit = function() {
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-// Here we run a very simple test of the Graph API after login is
-// successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
-  var pagesData = {};
-  console.log('Welcome!  Fetching your information.... ');
-  FB.api('/me/accounts', function(response) {
-    pagesData = getPagesData(response.data);
-    console.log('pagesData: ', pagesData);
-    console.log(response);
-    console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
-    //window.location.href = "http://localhost:3000/" + date;
-    FB.Event.subscribe('auth.authResponseChange', auth_response_change_callback);
-    FB.Event.subscribe('auth.statusChange', auth_status_change_callback);
-
-    function getPagesData(responseData) {
-      pagesData = response.data;
-        for (var j = 0; j < pagesData.length; j++) {
-        pagesData[j].posts = getPagePosts(pagesData[j].id);
-      }
-      return pagesData
-    }
-
-    function getPagePosts(pageID) {
-      var posts = {unpublished: [], published: []};
-      FB.api(
-        '/'+pageID+'/posts?fields=message,created_time,is_published',
-        function(response) {
-          var data = response.data;
-          for (var i = 0; i < data.length; i++) {
-            if (data[i].is_published) {
-              posts.published.push(data[i]);
-            } else {
-              posts.unpublished.push(data[i]);
-            }
-          }
-        }
-      );
-      return posts;
-    }
-  });
-}
