@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Facebook Login JavaScript Example</title>
-<meta charset="UTF-8">
-</head>
-<body>
-<script type="text/javascript" src="entry.js"></script>
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-<fb:login-button
-  id="fblogin" 
-  scope="publish_actions,publish_actions,manage_pages,public_profile,email" 
-  onlogin="checkLoginState();"
-/>
-</fb:login-button>
+  <head>
+    <title>Facebook Login JavaScript Example</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <script type="text/javascript" src="entry.js"></script>
+    <!--
+      Below we include the Login Button social plugin. This button uses
+      the JavaScript SDK to present a graphical Login button that triggers
+      the FB.login() function when clicked.
+    -->
+    <fb:login-button
+      id="fblogin"
+      scope="publish_actions,publish_actions,manage_pages,public_profile,email"
+      onlogin="checkLoginState();"
+    />
+    </fb:login-button>
 
-<div id="status">
-</div>
-</body>
+    <div id="status">
+    </div>
+  </body>
 </html>
