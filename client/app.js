@@ -32,14 +32,23 @@ const Logged = (props) => (
 Logged.muiName = 'IconMenu';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { userData: {}, pageData: {}, result: []};
+    this.checkLoginState = this.checkLoginState.bind(this);
+  }
+
   checkLoginState() {
     FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
+      var data = statusChangeCallback(response);
+      this.state.userData = data.userData;
+      this.state.pageData = data.pageData;
     });
   }
 
+
   render() {
-    console.log('props', this.props);
+    console.log('state', this.state);
 
     return (
       <MuiThemeProvider>
@@ -55,10 +64,10 @@ class App extends Component {
             callback={this.checkLoginState}
             fields="name,email,picture"
             cssClass="my-facebook-button"
+            scope="publish_actions,manage_pages,public_profile,email" 
           ></FacebookLogin>
         </div>
       </MuiThemeProvider>
-
     );
   }
 }
