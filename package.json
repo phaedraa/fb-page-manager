@@ -21,8 +21,10 @@
   },
   "dependencies": {
     "express": "^4.15.2",
-    "react": "~15.3.2",
-    "react-dom": "~15.3.2",
-    "react-facebook-login": "^3.5.0"
+    "react": "^15.4.2",
+    "react-dom": "^15.4.0",
+    "react-facebook-login": "^3.5.0",
+    "react-tap-event-plugin": "^2.0.1",
+    "material-ui": "^0.17.4"
   }
 }
