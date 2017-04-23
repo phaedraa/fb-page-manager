@@ -11,6 +11,10 @@ import React, { Component } from 'react';
 import statusChangeCallback from './statusChangeCallback';
 import Toggle from 'material-ui/Toggle';
 
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
 const Logged = (props) => (
   <IconMenu
     {...props}
