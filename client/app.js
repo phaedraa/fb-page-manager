@@ -40,7 +40,9 @@ class App extends Component {
 
   checkLoginState() {
     FB.getLoginStatus(function(response) {
+      console.log('checkLoginState');
       var data = statusChangeCallback(response);
+      console.log('data: ', data);
       this.state.userData = data.userData;
       this.state.pageData = data.pageData;
     });

@@ -20,6 +20,8 @@ export default function statusChangeCallback(response) {
 
     var userData = utils.getUserInfo();
     var pageData = utils.getPageData();
+    console.log('userData', userData);
+    console.log('pageData', pageData);
     return {userData: userData, pageData: pageData};
   } else {
     showFBLoginButton();

@@ -8,17 +8,19 @@ export default {
   },
   getUserInfo: function() {
     console.log('in getUserInfo');
-    userData = {};
+    var userData = {};
+    // TODO: Create promises for all API calls
     FB.api('/me', function(response) {
       console.log('in getUserInfo API call');
       userData = response.data;
     });
-    console.log('userData', userData);
+    console.log('getUserInfo userData', userData);
+    
     return userData;
   },
   getPageData: function() {
     console.log('Welcome!  Fetching your information...');
-    pageData = {};
+    var pageData = {};
     FB.api('/me/accounts', function(response) {
       pageData = response.data;
       console.log(response.data);
