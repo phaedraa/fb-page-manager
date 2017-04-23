@@ -1,7 +1,11 @@
 function Util () {}
 
-Util.getPages() {
-
+Util.getPagesData(responseData) = function {
+  pagesData = response.data;
+    for (var j = 0; j < pagesData.length; j++) {
+    pagesData[j].posts = getPagePosts(pagesData[j].id);
+  }
+  return pagesData;
 }
 
 Util.getPagePosts(pageID) = function {
