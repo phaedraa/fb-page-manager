@@ -1,4 +1,5 @@
 import testAPI from './testAPI';
+import utils from './utils';
 
 // This is called with the results from from FB.getLoginStatus().
 export default function statusChangeCallback(response) {
@@ -10,14 +11,19 @@ export default function statusChangeCallback(response) {
   // for FB.getLoginStatus().
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
-    testAPI();
+    //testAPI();
     hideFBLoginButton();
     var uid = response.authResponse.userID;
     var accessToken = response.authResponse.accessToken;
     console.log('uid: ', uid);
     console.log('accessToken', accessToken);
+
+    var userData = utils.getUserInfo();
+    var pageData = utils.getPageData();
+    return {userData: userData, pageData: pageData};
   } else {
     showFBLoginButton();
+    return {};
     // The person is not logged into your app or we are unable to tell.
     // document.getElementById('status').innerHTML = 'Please log ' +
     //   'into this app.';

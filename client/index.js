@@ -1,4 +1,3 @@
-
 import React from 'react';
 import statusChangeCallback from './statusChangeCallback';
 import ReactDOM from 'react-dom';
