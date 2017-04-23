@@ -1,6 +1,6 @@
-function Util () {}
+function utils () {}
 
-Util.getPagesData(responseData) = function {
+utils.getPagesData(responseData) = function {
   pagesData = response.data;
     for (var j = 0; j < pagesData.length; j++) {
     pagesData[j].posts = getPagePosts(pagesData[j].id);
@@ -8,7 +8,7 @@ Util.getPagesData(responseData) = function {
   return pagesData;
 }
 
-Util.getPagePosts(pageID) = function {
+utils.getPagePosts(pageID) = function {
   var posts = {unpublished: [], published: []};
   FB.api(
     '/' + pageID + '/posts?fields=message,created_time,is_published',
@@ -26,9 +26,9 @@ Util.getPagePosts(pageID) = function {
   return posts;
 }
 
-Util.publishPost(pageID, data) {
+utils.publishPost(pageID, data) = function {
   FB.api(
-    '/' + pageID + '/feed',
+    "/" + pageID + "/feed",
     'post',
     data,
     function (response) {
@@ -36,3 +36,5 @@ Util.publishPost(pageID, data) {
     }
   );
 }
+
+module.exports = utils;
