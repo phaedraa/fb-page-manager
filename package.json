@@ -14,5 +14,8 @@
   "homepage": "https://github.com/phaedraa/fb-page-manager#readme",
   "devDependencies": {
     "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "express": "^4.15.2"
   }
 }
