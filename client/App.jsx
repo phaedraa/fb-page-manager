@@ -6,7 +6,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import React, { Component } from 'react';
-import statusChangeCallback from './statusChangeCallback';
 import Toggle from 'material-ui/Toggle';
 import utils from './utils';
 
