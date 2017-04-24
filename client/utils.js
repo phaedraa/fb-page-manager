@@ -1,22 +1,15 @@
 export default {
+  getUserInfo: function(callback) {
+    FB.api('/me', function(response) {
+      callback(response);
+    });
+  },
   getPagesData: function(responseData) {
     pagesData = response.data;
       for (var j = 0; j < pagesData.length; j++) {
       pagesData[j].posts = getPagePosts(pagesData[j].id);
     }
     return pagesData;
-  },
-  getUserInfo: function() {
-    console.log('in getUserInfo');
-    var userData = {};
-    // TODO: Create promises for all API calls
-    FB.api('/me', function(response) {
-      console.log('in getUserInfo API call');
-      userData = response.data;
-    });
-    console.log('getUserInfo userData', userData);
-    
-    return userData;
   },
   getPageData: function() {
     console.log('Welcome!  Fetching your information...');
@@ -37,7 +30,7 @@ export default {
       console.log("auth_response_change_callback");
       console.log(response);
     }
-    
+
     function auth_status_change_callback(response) {
       console.log("auth_status_change_callback: " + response.status);
     }

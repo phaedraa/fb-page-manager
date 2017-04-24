@@ -8,6 +8,7 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import React, { Component } from 'react';
 import statusChangeCallback from './statusChangeCallback';
 import Toggle from 'material-ui/Toggle';
+import utils from './utils';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -17,14 +18,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.checkLoginState = this.checkLoginState.bind(this);
+    this.userInfoReceived = this.userInfoReceived.bind(this);
     this.state = { isLoggedIn: false };
   }
 
+  userInfoReceived(userInfo) {
+    this.setState({
+      userName: userInfo.name,
+      userID: userInfo.id
+    });
+  }
+
   checkLoginState() {
-    FB.getLoginStatus(function(response) {
+    FB.getLoginStatus((response) => {
       if (response.status === 'connected') {
         this.setState({ isLoggedIn: true });
-        utils.getUser
+        utils.getUserInfo(this.userInfoReceived)
       }
     });
   }
@@ -37,6 +46,14 @@ class App extends Component {
     );
   }
 
+  getTitle() {
+    if (this.state.isLoggedIn) {
+      return `Welcome ${this.state.userName}`;
+    } else {
+      return 'Please log in';
+    }
+  }
+
   render() {
     console.log('state', this.state);
 
@@ -44,7 +61,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div className="App">
           <AppBar
-            title="Title"
+            title={this.getTitle()}
             iconElementRight={this.getMenu()}
           />
           <FacebookLogin
