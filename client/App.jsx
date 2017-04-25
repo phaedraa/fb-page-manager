@@ -62,13 +62,12 @@ class App extends Component {
 
   render() {
     console.log('state', this.state);
-
     return (
       <MuiThemeProvider>
         <div className="App">
           <AppBar
             title={this.getTitle()}
-            iconElementRight={this.getMenu()}
+            iconElementLeft={this.getMenu()}
           />
           <FacebookLogin
             appId="167040673631579"
