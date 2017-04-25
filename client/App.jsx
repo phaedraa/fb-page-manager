@@ -72,6 +72,22 @@ class App extends Component {
     }
   }
 
+  getFBLoginButton() {
+    if (this.state.isLoggedIn) {
+      return null;
+    }
+    return (
+      <FacebookLogin
+        appId="167040673631579"
+        autoLoad={true}
+        callback={this.checkLoginState}
+        fields="name,email,picture"
+        cssClass="my-facebook-button"
+        scope="publish_actions,manage_pages,public_profile,email"
+      ></FacebookLogin>
+    );
+  }
+
   render() {
     console.log('state', this.state);
     return (
@@ -82,14 +98,7 @@ class App extends Component {
             iconElementLeft={this.getMenu()}
           />
           <Subheader>{this.getSubheaderText()}</Subheader>
-          <FacebookLogin
-            appId="167040673631579"
-            autoLoad={true}
-            callback={this.checkLoginState}
-            fields="name,email,picture"
-            cssClass="my-facebook-button"
-            scope="publish_actions,manage_pages,public_profile,email"
-          ></FacebookLogin>
+          <div>{this.getFBLoginButton()}</div>
         </div>
       </MuiThemeProvider>
     );
