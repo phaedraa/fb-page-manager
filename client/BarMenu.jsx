@@ -7,7 +7,18 @@ import _ from 'lodash';
 
 export default class BarMenu extends Component {
   render() {
-    if (_.isArray(this.props.pageData)) {
+    if (_.isArray(this.props.pagesData)) {
+      var menuItems = [];
+      console.log('in BarMenu 2: ', this.props.pagesData);
+      for (var i = 0; i < this.props.pagesData.length; i++) {
+        menuItems.push(
+          <MenuItem
+            primaryText={this.props.pagesData[i].name}
+            key={this.props.pagesData[i].id}
+          />);
+      }
+      debugger;
+
       return (
         <IconMenu
           iconButtonElement={
@@ -16,13 +27,7 @@ export default class BarMenu extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
         >
-          {
-            this.props.pageData.map((page) => {
-              console.log(page);
-              debugger;
-              console.log('lux');
-            })
-          }
+          {menuItems}
         </IconMenu>
       );
     } else {

@@ -46,10 +46,9 @@ class App extends Component {
   }
 
   getMenu() {
-    const { pageData } = this.state;
-
+    const { pagesData } = this.state;
     return (
-      <BarMenu pageData={pageData} />
+      <BarMenu pagesData={pagesData} />
     );
   }
 
