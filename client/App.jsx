@@ -6,6 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import React, { Component } from 'react';
+import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import utils from './utils';
 
@@ -60,6 +61,17 @@ class App extends Component {
     }
   }
 
+  getSubheaderText() {
+    if (this.state.isLoggedIn) {
+      var strr =  'Welcome to the FB Page Manager App where you can post' +
+        ' to your pages, review insights on your published posts, and preview' +
+        ' your unpublished posts';
+      return strr;
+    } else {
+      return 'Log in to your Facebook below to use the FB Page Manager App!';
+    }
+  }
+
   render() {
     console.log('state', this.state);
     return (
@@ -69,6 +81,7 @@ class App extends Component {
             title={this.getTitle()}
             iconElementLeft={this.getMenu()}
           />
+          <Subheader>{this.getSubheaderText()}</Subheader>
           <FacebookLogin
             appId="167040673631579"
             autoLoad={true}
