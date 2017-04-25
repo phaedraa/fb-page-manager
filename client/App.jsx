@@ -83,6 +83,13 @@ class App extends Component {
     }
   }
 
+  getPageNavBar() {
+    if (this.state.isLoggedIn && this.state.pageID) {
+      return 
+    }
+    return null;
+  }
+
   getFBLoginButton() {
     if (this.state.isLoggedIn) {
       return null;
@@ -109,6 +116,7 @@ class App extends Component {
             iconElementLeft={this.getMenu()}
           />
           <Subheader>{this.getSubheaderText()}</Subheader>
+          <div>{this.getPageNavBar()}</div>
           <div>{this.getFBLoginButton()}</div>
         </div>
       </MuiThemeProvider>
