@@ -46,10 +46,19 @@ class App extends Component {
     });
   }
 
+  setPageID(id) {
+    console.log('setPageID');
+    debugger;
+    this.setState({ pageID: id });
+  }
+
   getMenu() {
     const { pagesData } = this.state;
     return (
-      <BarMenu pagesData={pagesData} />
+      <BarMenu
+        pagesData={pagesData} 
+        getPageIDFromMenu={id => this.setPageID(id)}
+      />
     );
   }
 
