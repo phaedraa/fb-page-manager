@@ -17,8 +17,12 @@ export default class BarMenu extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
         >
           {
-            this.props.pagesData.map((page) => 
-              <MenuItem primaryText={page.name} key={page.id} />
+            this.props.pagesData.map((page, idx) =>
+              <MenuItem
+                primaryText={page.name}
+                key={page.id}
+                checked={idx === 0}
+              />
             )
           }
         </IconMenu>
