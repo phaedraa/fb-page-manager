@@ -20,6 +20,7 @@ class App extends Component {
     this.checkLoginState = this.checkLoginState.bind(this);
     this.userInfoReceived = this.userInfoReceived.bind(this);
     this.userPagesDataReceived = this.userPagesDataReceived.bind(this);
+    this.setPageID = this.setPageID.bind(this);
     this.state = { isLoggedIn: false };
   }
 
@@ -47,8 +48,9 @@ class App extends Component {
   }
 
   setPageID(id) {
-    console.log('setPageID');
-    debugger;
+    //console.log('setPageID');
+    //debugger;
+    console.log('pageID in setPageID: ', id);
     this.setState({ pageID: id });
   }
 
@@ -57,7 +59,7 @@ class App extends Component {
     return (
       <BarMenu
         pagesData={pagesData} 
-        getPageIDFromMenu={id => this.setPageID(id)}
+        getPageIDFromMenu={this.setPageID}
       />
     );
   }

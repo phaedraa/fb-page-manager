@@ -8,8 +8,8 @@ export default {
   getPagesData: function(callback) {
     FB.api('/me/accounts', function(response) {
       callback(response);
-      console.log(response.data);
-      console.log('Fetching your accounts');
+      //console.log(response.data);
+      //console.log('Fetching your accounts');
       // document.getElementById('status').innerHTML =
       //   'Thanks for logging in, ' + response.name + '!';
       //window.location.href = "http://localhost:3000/" + date;
@@ -18,12 +18,12 @@ export default {
     });
 
     function auth_response_change_callback(response) {
-      console.log("auth_response_change_callback");
-      console.log(response);
+      //console.log("auth_response_change_callback");
+      //console.log(response);
     }
 
     function auth_status_change_callback(response) {
-      console.log("auth_status_change_callback: " + response.status);
+      //console.log("auth_status_change_callback: " + response.status);
     }
   },
   getPagePosts: function(pageID) {
@@ -49,7 +49,7 @@ export default {
       'post',
       data,
       function (response) {
-        console.log('published: ', response);
+        //console.log('published: ', response);
       }
     );
   }

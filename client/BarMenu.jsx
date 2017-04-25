@@ -21,8 +21,8 @@ export default class BarMenu extends Component {
 
   componentWillMount() {
     this.setInitialCheckedPageID();
-    console.log('componentWillMount');
-    console.log('props', this.props);          
+    //console.log('componentWillMount');
+    //console.log('props', this.props);          
     if (this.props.getPageIDFromMenu) {
       this.props.getPageIDFromMenu(this.state.checkedPageID);
     }
@@ -30,6 +30,8 @@ export default class BarMenu extends Component {
 
   getSelectedPage(pageID, event) {
     this.setState({ checkedPageID: pageID });
+    console.log('pageID: ', this.state.checkedPageID);
+    this.props.getPageIDFromMenu(this.state.checkedPageID);
   }
 
   setInitialCheckedPageID() {
@@ -39,29 +41,29 @@ export default class BarMenu extends Component {
 
   render() {
     console.log('state in BarMenu: ', this.state);
-    if (_.isArray(this.props.pagesData)) {
-      return (
-        <IconMenu
-          iconButtonElement={
-            <IconButton><MoreVertIcon /></IconButton>
-          }
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-        >
-          {
-            this.props.pagesData.map((page) =>
-              <MenuItem
-                primaryText={page.name}
-                key={page.id}
-                checked={page.id === this.getCheckedPageID()}
-                onTouchTap={this.getSelectedPage.bind(this, page.id)}
-              />
-            )
-          }
-        </IconMenu>
-      );
-    } else {
+    if (!_.isArray(this.props.pagesData)) {
       return null;
     }
+
+    return (
+      <IconMenu
+        iconButtonElement={
+          <IconButton><MoreVertIcon /></IconButton>
+        }
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+      >
+        {
+          this.props.pagesData.map((page) =>
+            <MenuItem
+              primaryText={page.name}
+              key={page.id}
+              checked={page.id === this.getCheckedPageID()}
+              onTouchTap={this.getSelectedPage.bind(this, page.id)}
+            />
+          )
+        }
+      </IconMenu>
+    );
   }
 }
