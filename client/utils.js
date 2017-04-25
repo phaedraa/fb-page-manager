@@ -2,29 +2,20 @@ export default {
   getUserInfo: function(callback) {
     FB.api('/me', function(response) {
       callback(response);
+      console.log('Successful login for: ' + response.name);
     });
   },
-  getPagesData: function(responseData) {
-    pagesData = response.data;
-      for (var j = 0; j < pagesData.length; j++) {
-      pagesData[j].posts = getPagePosts(pagesData[j].id);
-    }
-    return pagesData;
-  },
-  getPageData: function() {
-    console.log('Welcome!  Fetching your information...');
-    var pageData = {};
+  getPagesData: function(callback) {
     FB.api('/me/accounts', function(response) {
-      pageData = response.data;
+      callback(response);
       console.log(response.data);
-      console.log('Successful login for: ' + response.name);
+      console.log('Fetching your accounts');
       // document.getElementById('status').innerHTML =
       //   'Thanks for logging in, ' + response.name + '!';
       //window.location.href = "http://localhost:3000/" + date;
       FB.Event.subscribe('auth.authResponseChange', auth_response_change_callback);
       FB.Event.subscribe('auth.statusChange', auth_status_change_callback);
     });
-    return pageData;
 
     function auth_response_change_callback(response) {
       console.log("auth_response_change_callback");

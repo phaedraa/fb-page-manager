@@ -18,6 +18,7 @@ class App extends Component {
     super(props);
     this.checkLoginState = this.checkLoginState.bind(this);
     this.userInfoReceived = this.userInfoReceived.bind(this);
+    this.userPagesDataReceived = this.userPagesDataReceived.bind(this);
     this.state = { isLoggedIn: false };
   }
 
@@ -28,11 +29,18 @@ class App extends Component {
     });
   }
 
+  userPagesDataReceived(userPagesData) {
+    this.setState({
+      pagesData: userPagesData.data,
+    });
+  }
+
   checkLoginState() {
     FB.getLoginStatus((response) => {
       if (response.status === 'connected') {
         this.setState({ isLoggedIn: true });
         utils.getUserInfo(this.userInfoReceived)
+        utils.getPagesData(this.userPagesDataReceived);
       }
     });
   }
