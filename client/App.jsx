@@ -1,18 +1,15 @@
 import AppBar from 'material-ui/AppBar';
-import FacebookLogin from 'react-facebook-login';
 import BarMenu from './BarMenu';
+import FacebookLogin from 'react-facebook-login';
 import IconMenu from 'material-ui/IconMenu';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import PageTabs from './PageTabs';
 import React, { Component } from 'react';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import utils from './utils';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +19,12 @@ class App extends Component {
     this.userPagesDataReceived = this.userPagesDataReceived.bind(this);
     this.setPageID = this.setPageID.bind(this);
     this.state = { isLoggedIn: false };
+  }
+
+  componentWillMount() {
+    // Needed for onTouchTap
+    // http://stackoverflow.com/a/34015469/988941
+    injectTapEventPlugin();
   }
 
   userInfoReceived(userInfo) {
@@ -48,9 +51,6 @@ class App extends Component {
   }
 
   setPageID(id) {
-    //console.log('setPageID');
-    //debugger;
-    console.log('pageID in setPageID: ', id);
     this.setState({ pageID: id });
   }
 
@@ -85,7 +85,7 @@ class App extends Component {
 
   getPageNavBar() {
     if (this.state.isLoggedIn && this.state.pageID) {
-      return 
+      return <PageTabs />
     }
     return null;
   }
@@ -107,7 +107,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('state', this.state);
     return (
       <MuiThemeProvider>
         <div className="App">

@@ -13,9 +13,7 @@ export default class BarMenu extends Component {
   }
 
   getCheckedPageID() {
-    //console.log('props???', this.props.pagesData);
     if (_.isArray(this.props.pagesData) && !this.state.checkedPageID) {
-      console.log('here?', this.props.pagesData[0].id);
       return this.props.pagesData[0].id;
     }
     return this.state.checkedPageID;
@@ -23,8 +21,6 @@ export default class BarMenu extends Component {
 
   componentWillMount() {
     this.setInitialCheckedPageID();
-    //console.log('componentWillMount');
-    console.log('getCheckedPageID', this.getCheckedPageID());          
     if (this.props.getPageIDFromMenu) {
       this.props.getPageIDFromMenu(this.getCheckedPageID());
     }
@@ -32,7 +28,6 @@ export default class BarMenu extends Component {
 
   getSelectedPage(pageID, event) {
     this.setState({ checkedPageID: pageID });
-    console.log('pageID: ', this.getCheckedPageID());
     this.props.getPageIDFromMenu(this.getCheckedPageID());
   }
 
@@ -42,7 +37,6 @@ export default class BarMenu extends Component {
   }
 
   render() {
-    console.log('state in BarMenu: ', this.state);
     if (!_.isArray(this.props.pagesData)) {
       return null;
     }
