@@ -18,6 +18,7 @@ export default class PagePosts extends React.Component {
               createdAt={post.created_time}
               message={post.message}
               numReactions={post.reactions.data.length}
+              permalink={post.permalink_url}
             />
           )
         }
