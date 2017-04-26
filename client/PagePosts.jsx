@@ -17,7 +17,7 @@ export default class PagePosts extends React.Component {
               key={post.id}
               createdAt={post.created_time}
               message={post.message}
-              numReactions={post.reactions.data.length}
+              numReactions={post.reactions && post.reactions.data.length}
               permalink={post.permalink_url}
               createdByID={post.admin_creator.id}
               createdByName={post.admin_creator.name}

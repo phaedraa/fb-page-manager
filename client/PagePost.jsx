@@ -56,6 +56,7 @@ export default class PagePost extends React.Component {
         />
         <CardText>
           {`${this.props.message}`}
+          {<div><br/><b>{this.props.numReactions} Reaction(s)</b></div>}
         </CardText>
         <CardActions>
           <FlatButton label="Detailed Insights" />
