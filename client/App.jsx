@@ -85,7 +85,7 @@ class App extends Component {
 
   getPageNavBar() {
     if (this.state.isLoggedIn && this.state.pageID) {
-      return <PageTabs />
+      return <PageTabs pageID={this.state.pageID}/>
     }
     return null;
   }

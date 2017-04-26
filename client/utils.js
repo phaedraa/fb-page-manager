@@ -8,8 +8,6 @@ export default {
   getPagesData: function(callback) {
     FB.api('/me/accounts', function(response) {
       callback(response);
-      //console.log(response.data);
-      //console.log('Fetching your accounts');
       // document.getElementById('status').innerHTML =
       //   'Thanks for logging in, ' + response.name + '!';
       //window.location.href = "http://localhost:3000/" + date;
@@ -26,10 +24,10 @@ export default {
       //console.log("auth_status_change_callback: " + response.status);
     }
   },
-  getPagePosts: function(pageID) {
+  getPagePosts: function(pageID, callback) {
     var posts = {unpublished: [], published: []};
     FB.api(
-      '/' + pageID + '/posts?fields=message,created_time,is_published',
+      '/' + pageID + '/posts?fields=message,created_time,is_published,reactions',
       function (response) {
         var data = response.data;
         for (var i = 0; i < data.length; i++) {
@@ -39,6 +37,7 @@ export default {
             posts.unpublished.push(data[i]);
           }
         }
+        callback(posts);
       }
     );
     return posts;
