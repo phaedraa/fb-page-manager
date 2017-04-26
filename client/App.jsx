@@ -50,8 +50,11 @@ class App extends Component {
     });
   }
 
-  setPageID(id) {
-    this.setState({ pageID: id });
+  setPageID(data) {
+    this.setState({
+      pageID: data.checkedPageID,
+      pageName: data.checkedPageName
+    });
   }
 
   getMenu() {
@@ -72,15 +75,26 @@ class App extends Component {
     }
   }
 
+  getWelcomeText() {
+    var welcomeMessage = 'Welcome to the FB Page Manager App where you can post' +
+      ' to your pages, review insights on your published posts, and preview' +
+      ' your unpublished posts. ';
+    return (
+      <div>
+        {welcomeMessage}
+        <b>Log in to your Facebook below to use the FB Page Manager App!</b>
+      </div>
+    );
+  }
+
   getSubheaderText() {
     if (this.state.isLoggedIn) {
-      var strr =  'Welcome to the FB Page Manager App where you can post' +
-        ' to your pages, review insights on your published posts, and preview' +
-        ' your unpublished posts';
-      return strr;
-    } else {
-      return 'Log in to your Facebook below to use the FB Page Manager App!';
+      return this.state.pageName
+        ? <h1>{this.state.pageName}</h1>
+        : <h1>Select a page with which to work.</h1>;
     }
+
+    return this.getWelcomeText();
   }
 
   getPageNavBar() {

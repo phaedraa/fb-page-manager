@@ -8,32 +8,40 @@ import _ from 'lodash';
 export default class BarMenu extends Component {
   constructor(props) {
     super(props);
-    this.getCheckedPageID = this.getCheckedPageID.bind(this);
-    this.state = { checkedPageID: null };
+    this.getCheckedPageData = this.getCheckedPageData.bind(this);
+    this.state = { checkedPageID: null, checkedPageName: null };
   }
 
-  getCheckedPageID() {
-    if (_.isArray(this.props.pagesData) && !this.state.checkedPageID) {
-      return this.props.pagesData[0].id;
+  getCheckedPageData() {
+    if (_.isArray(this.props.pagesData) && (!this.state.checkedPageID ||
+      !this.state.checkedPageName)
+    ) {
+      return {
+        checkedPageID: this.props.pagesData[0].id,
+        checkedPageName: this.props.pagesData[0].name
+      };
     }
-    return this.state.checkedPageID;
+    return this.state;
   }
 
   componentWillMount() {
-    this.setInitialCheckedPageID();
+    this.setInitialCheckedPageData();
     if (this.props.getPageIDFromMenu) {
-      this.props.getPageIDFromMenu(this.getCheckedPageID());
+      this.props.getPageIDFromMenu(this.getCheckedPageData());
     }
   }
 
-  getSelectedPage(pageID, event) {
-    this.setState({ checkedPageID: pageID });
-    this.props.getPageIDFromMenu(this.getCheckedPageID());
+  getSelectedPage(pageID, pageName, event) {
+    this.setState({ checkedPageID: pageID, checkedPageName: pageName });
+    this.props.getPageIDFromMenu(this.getCheckedPageData());
   }
 
-  setInitialCheckedPageID() {
-    var id = this.getCheckedPageID();
-    this.setState({ checkedPageID: id });
+  setInitialCheckedPageData() {
+    var data = this.getCheckedPageData();
+    this.setState({ 
+      checkedPageID: data.checkedPageID,
+      checkedPageName: data.checkedPageName
+    });
   }
 
   render() {
@@ -54,8 +62,8 @@ export default class BarMenu extends Component {
             <MenuItem
               primaryText={page.name}
               key={page.id}
-              checked={page.id === this.getCheckedPageID()}
-              onTouchTap={this.getSelectedPage.bind(this, page.id)}
+              checked={page.id === this.getCheckedPageData()}
+              onTouchTap={this.getSelectedPage.bind(this, page.id, page.name)}
             />
           )
         }
