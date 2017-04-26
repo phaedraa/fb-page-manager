@@ -27,7 +27,8 @@ export default {
   getPagePosts: function(pageID, callback) {
     var posts = {unpublished: [], published: []};
     FB.api(
-      '/' + pageID + '/posts?fields=message,created_time,is_published,reactions,permalink_url,admin_creator',
+      '/' + pageID + '/posts?fields=message,created_time,is_published,' +
+      'reactions,permalink_url,admin_creator,attachments',
       function (response) {
         var data = response.data;
         for (var i = 0; i < data.length; i++) {
@@ -40,7 +41,6 @@ export default {
         callback(posts);
       }
     );
-    return posts;
   },
   publishPost: function(pageID, data) {
     FB.api(

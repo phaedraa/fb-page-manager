@@ -16,11 +16,12 @@ export default class PagePosts extends React.Component {
             <PagePost
               key={post.id}
               createdAt={post.created_time}
-              message={post.message}
+              message={post.message || ''}
               numReactions={post.reactions && post.reactions.data.length}
               permalink={post.permalink_url}
-              createdByID={post.admin_creator.id}
-              createdByName={post.admin_creator.name}
+              createdByID={post.admin_creator && post.admin_creator.id}
+              createdByName={post.admin_creator && post.admin_creator.name}
+              attachments={post.attachments || {}}
             />
           )
         }

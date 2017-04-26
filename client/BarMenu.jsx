@@ -33,7 +33,10 @@ export default class BarMenu extends Component {
 
   getSelectedPage(pageID, pageName, event) {
     this.setState({ checkedPageID: pageID, checkedPageName: pageName });
-    this.props.getPageIDFromMenu(this.getCheckedPageData());
+    this.props.getPageIDFromMenu({
+      checkedPageID: pageID,
+      checkedPageName: pageName
+    });
   }
 
   setInitialCheckedPageData() {
@@ -62,7 +65,7 @@ export default class BarMenu extends Component {
             <MenuItem
               primaryText={page.name}
               key={page.id}
-              checked={page.id === this.getCheckedPageData()}
+              checked={page.id === this.state.checkedPageID}
               onTouchTap={this.getSelectedPage.bind(this, page.id, page.name)}
             />
           )

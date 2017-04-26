@@ -21,9 +21,8 @@ export default class PageTabs extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.getPublishedPostData = this.getPublishedPostData.bind(this);
     this.setPageData = this.setPageData.bind(this);
-    this.getPublishedPosts = this.getPublishedPosts.bind(this);
+    this.fetchAndSetPostData = this.fetchAndSetPostData.bind(this);
     this.state = {
       slideIndex: 0,
       publishedPosts: null,
@@ -38,35 +37,19 @@ export default class PageTabs extends React.Component {
   }
 
   setPageData(postData) {
+    //debugger;
     this.setState({
       publishedPosts: postData.published,
       unpublishedPosts: postData.unpublished
     });
   }
 
-  getPublishedPostData() {
-    if (this.state.publishedPosts === null) {
-      utils.getPagePosts(this.props.pageID, this.setPageData);
-    }
-  }
-
-  getPublishedPosts() {
-    this.getPublishedPostData();
-    return <PagePosts postData={this.state.publishedPosts || []} />;
-  }
-
-  getUnpublishedPostData() {
-    if (this.state.unpublishedPosts === null) {
-      utils.getPagePosts(this.props.pageID, this.setPageData);
-    }
-  }
-
-  getUnpublishedPosts() {
-    this.getUnpublishedPostData();
-    return <PagePosts postData={this.state.unpublishedPosts || []} />;
+  fetchAndSetPostData() {
+    utils.getPagePosts(this.props.pageID, this.setPageData);
   }
 
   render() {
+    this.fetchAndSetPostData();
     return (
       <div>
         <Tabs
@@ -83,10 +66,10 @@ export default class PageTabs extends React.Component {
         >
           <div>
             <br />
-            {this.getPublishedPosts()}
+            <PagePosts postData={this.state.publishedPosts || []} />
           </div>
           <div style={styles.slide}>
-            {this.getUnpublishedPosts()}
+            <PagePosts postData={this.state.unpublishedPosts || []} />
           </div>
           <div style={styles.slide}>
             Create NEW Post!

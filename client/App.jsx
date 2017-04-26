@@ -71,18 +71,18 @@ class App extends Component {
     if (this.state.isLoggedIn) {
       return `Welcome ${this.state.userName}`;
     } else {
-      return 'Please log in';
+      return 'Welcome To FB Page Manager';
     }
   }
 
   getWelcomeText() {
-    var welcomeMessage = 'Welcome to the FB Page Manager App where you can post' +
+    var welcomeMessage = 'In the FB Page Manager App, you can post' +
       ' to your pages, review insights on your published posts, and preview' +
       ' your unpublished posts. ';
     return (
       <div>
         {welcomeMessage}
-        <b>Log in to your Facebook below to use the FB Page Manager App!</b>
+        <b>Log in to your Facebook below to get started!</b>
       </div>
     );
   }
