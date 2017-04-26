@@ -6,21 +6,29 @@ import FlatButton from 'material-ui/FlatButton';
 export default class PagePost extends React.Component {
   constructor(props) {
     super(props);
-    //this.getCreatedAtAnchoredText = this.getCreatedAtAnchoredText.bind(this);
+    this.getCreatedAtAnchoredText = this.getCreatedAtAnchoredText.bind(this);
+    this.getCreatedByText = this.getCreatedByText.bind(this);
     //this.getAnchorStyle = this.getAnchorStyle.bind(this);
     this.toggleHover = this.toggleHover.bind(this);
     this.state = { hover: false };
   };
 
-  //getCreatedAtAnchoredText() {
-  //  var timestamp = moment(this.props.createdAt);
-  //  return (
-  //    <a href={this.props.permalink}>
-  //      style={this.getAnchorStyle()}
-  //      {timestamp.format("MMMM d, YYYY")} at {timestamp.format("h:mm a")}
-  //    </a>
-  //  );
-  //}
+  getCreatedAtAnchoredText() {
+    var timestamp = moment(this.props.createdAt);
+    return (
+      <a href={this.props.permalink}>
+        {timestamp.format("MMMM d, YYYY")} at {timestamp.format("h:mm a")}
+      </a>
+    );
+  }
+
+  getCreatedByText() {
+    return `Created by: ${this.props.createdByName}`;
+    //return
+    //  <a href={`https://www.facebook.com/${this.props.createdByID}`}>
+    //    {`Created by: ${this.props.createdByName}`}
+    //  </a>;
+  }
 
   //getAnchorStyle() {
   //  if (this.state.hover) {
@@ -39,23 +47,14 @@ export default class PagePost extends React.Component {
   }
 
   render() {
-    var timestamp = moment(this.props.createdAt);
-    var anchoredTitle =
-      <a href={this.props.permalink}>
-        {timestamp.format("MMMM d, YYYY")} at {timestamp.format("h:mm a")}
-      </a>;
-
     return (
       <Card>
-        <CardText expandable={true}>
-          {`${this.props.message}`}
-        </CardText>
         <CardHeader
           onMouseOver={this.toggleHover}
-          title={anchoredTitle}
-          subtitle={`${this.props.numReactions} Reaction(s)`}
+          title={this.getCreatedAtAnchoredText()}
+          subtitle={this.getCreatedByText()}
         />
-        <CardText expandable={false}>
+        <CardText>
           {`${this.props.message}`}
         </CardText>
         <CardActions>
