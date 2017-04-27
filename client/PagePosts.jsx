@@ -15,6 +15,7 @@ export default class PagePosts extends React.Component {
           this.props.postData.map((post) => 
             <PagePost
               key={post.id}
+              id={post.id}
               createdAt={post.created_time}
               message={post.message || ''}
               numReactions={post.reactions && post.reactions.data.length}

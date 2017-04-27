@@ -37,7 +37,6 @@ export default class PageTabs extends React.Component {
   }
 
   setPageData(postData) {
-    //debugger;
     this.setState({
       publishedPosts: postData.published,
       unpublishedPosts: postData.unpublished
