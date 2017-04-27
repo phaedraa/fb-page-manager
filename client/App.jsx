@@ -1,5 +1,6 @@
 import AppBar from 'material-ui/AppBar';
 import BarMenu from './BarMenu';
+import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 import FacebookLogin from 'react-facebook-login';
 import IconMenu from 'material-ui/IconMenu';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -87,14 +88,21 @@ class App extends Component {
     );
   }
 
-  getSubheaderText() {
+  getPageInfoCard() {
     if (this.state.isLoggedIn) {
+      var testAvatarURL = "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/12191835_890554757718779_6359650367402484387_n.png?_nc_log=1&oh=ef554e74238eec74f4eb701f80aa4bab&oe=5986933C";
       return this.state.pageName
-        ? <h1>{this.state.pageName}</h1>
-        : <h1>Select a page with which to work.</h1>;
+        ? (<Card>
+            <CardHeader
+              avatar={testAvatarURL}
+              title={this.state.pageName}
+              subtitle={'Some test description'}
+            />
+          </Card>)
+        : (<h1>Select a page with which to work.</h1>);
     }
 
-    return this.getWelcomeText();
+    return <Subheader>{this.getWelcomeText()}</Subheader>
   }
 
   getPageNavBar() {
@@ -128,7 +136,7 @@ class App extends Component {
             title={this.getTitle()}
             iconElementLeft={this.getMenu()}
           />
-          <Subheader>{this.getSubheaderText()}</Subheader>
+          {this.getPageInfoCard()}
           <div>{this.getPageNavBar()}</div>
           <div>{this.getFBLoginButton()}</div>
         </div>
