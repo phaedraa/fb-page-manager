@@ -1,8 +1,9 @@
 import React from 'react';
-import moment from 'moment';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
+import moment from 'moment';
+import PostAttachment from './PostAttachment';
+import Toggle from 'material-ui/Toggle';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 export default class PagePost extends React.Component {
   constructor(props) {
@@ -13,7 +14,6 @@ export default class PagePost extends React.Component {
     this.getKey = this.getKey.bind(this);
     this.getReactionsDiv = this.getReactionsDiv.bind(this);
     this.toggleHover = this.toggleHover.bind(this);
-
     //this.getAnchorStyle = this.getAnchorStyle.bind(this);
     this.state = { hover: false, expanded: false };
   };
@@ -64,36 +64,15 @@ export default class PagePost extends React.Component {
       return null;
     }
     
-    var attachmentMedia = [];
-    this.props.attachments.data.map((attachment, idx) => {
-      if (!(attachment.media && attachment.media.image.src)) {
-        return;
-      }
-      var image = attachment.media.image;
-      var descriptor = attachment.description
-        ? `${attachment.type}: ${attachment.description}`
-        : attachment.type;
-      attachmentMedia.push(
-        <CardMedia
-          key={this.getKey(idx)}
-          expandable={true}
-          overlay={
-            <CardTitle
-              title={attachment.title}
-              subtitle={descriptor}
-            />
-          }
-        >
-          <img
-            style={ { height: "50%", width: "50%", maxWidth: "50%", minWidth: "50%"} }
-            src={image.src}
-            height={image.height}
-            width={image.width}
-          />
-        </CardMedia>
-      );
+    return this.props.attachments.data.map((attachment, idx) => {
+      return attachment.media && attachment.media.image.src
+        ? (<PostAttachment
+            key={this.getKey(idx)}
+            attachment={attachment}
+            expandable={true}
+          />)
+        : null;
     });
-    return attachmentMedia;
   }
 
   getReactionsDiv() {
