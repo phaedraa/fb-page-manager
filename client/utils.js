@@ -22,21 +22,21 @@ export default {
   },
   getPagePosts: function(pageID, callback) {
     var posts = {unpublished: [], published: []};
-    FB.api(
-      '/' + pageID + '/posts?fields=message,created_time,is_published,' +
-      'reactions,permalink_url,admin_creator,attachments',
-      function (response) {
-        var data = response.data;
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].is_published) {
-            posts.published.push(data[i]);
-          } else {
-            posts.unpublished.push(data[i]);
-          }
+    const url = '/' + pageID +
+      '/posts?fields=message,created_time,is_published,' +
+      'reactions,permalink_url,admin_creator,attachments';
+    const parsePosts = (response) => {
+      var data = response.data;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].is_published) {
+          posts.published.push(data[i]);
+        } else {
+          posts.unpublished.push(data[i]);
         }
-        callback(posts);
       }
-    );
+      callback(posts);
+    }
+    FB.api(url, parsePosts);
   },
   publishPost: function(pageID, data) {
     FB.api(
