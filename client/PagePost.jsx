@@ -3,18 +3,17 @@ import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment';
 import PostAttachment from './PostAttachment';
 import Toggle from 'material-ui/Toggle';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 
 export default class PagePost extends React.Component {
   constructor(props) {
     super(props);
+    this.getAnchorStyle = this.getAnchorStyle.bind(this);
     this.getAttachmentMedia = this.getAttachmentMedia.bind(this);
     this.getCreatedAtAnchoredText = this.getCreatedAtAnchoredText.bind(this);
     this.getCreatedByText = this.getCreatedByText.bind(this);
     this.getKey = this.getKey.bind(this);
     this.getReactionsDiv = this.getReactionsDiv.bind(this);
-    this.toggleHover = this.toggleHover.bind(this);
-    //this.getAnchorStyle = this.getAnchorStyle.bind(this);
     this.state = { hover: false, expanded: false };
   };
 
@@ -29,7 +28,7 @@ export default class PagePost extends React.Component {
   getCreatedAtAnchoredText() {
     var timestamp = moment(this.props.createdAt);
     return (
-      <a href={this.props.permalink}>
+      <a href={this.props.permalink} style={this.getAnchorStyle()}>
         {timestamp.format("MMMM d, YYYY")} at {timestamp.format("h:mm a")}
       </a>
     );
@@ -43,17 +42,13 @@ export default class PagePost extends React.Component {
     //  </a>;
   }
 
-  //getAnchorStyle() {
-  //  if (this.state.hover) {
-  //    return { color: "gray", textDecorationLine: "none" };
-  //  }
-//
-  //  return {
-  //      color: "lightgray",
-  //      display: "flex",
-  //      textDecorationLine: "underline",
-  //  };
-  //}
+  getAnchorStyle() {
+    if (!this.state.hover) {
+      return { color: "darkslategrey", textDecorationLine: "none" };
+    }
+
+    return { color: "lightgray", textDecorationLine: "underline" };
+  }
 
   getKey(index) {
     return this.props.id + ":" + index;
@@ -92,18 +87,19 @@ export default class PagePost extends React.Component {
         expanded={this.state.expanded}
         onExpandChange={this.handleExpandChange.bind(this)}>
         <CardHeader
-          onMouseOver={this.toggleHover}
+          onMouseOver={this.toggleHover.bind(this)}
           title={this.getCreatedAtAnchoredText()}
           subtitle={this.getCreatedByText()}
-          actAsExpander={true}
-          showExpandableButton={true}
         />
         <CardText expandable={false}>
           {this.props.message}
         </CardText>
-        <CardText expandable={false}>
+        <CardTitle
+          actAsExpander={true}
+          showExpandableButton={true}
+        >
           {this.getReactionsDiv()}
-        </CardText>
+        </CardTitle>
         <CardText>
           <Toggle
             toggled={this.state.expanded}
