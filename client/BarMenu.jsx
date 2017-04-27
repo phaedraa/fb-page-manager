@@ -14,7 +14,7 @@ export default class BarMenu extends Component {
 
   getCheckedPageData() {
     if (_.isArray(this.props.pagesData) && !this.state.checkedPageID) {
-      return his.props.pagesData[0].id;
+      return this.props.pagesData[0].id;
     }
     return this.state.checkedPageID;
   }
@@ -28,7 +28,7 @@ export default class BarMenu extends Component {
 
   getSelectedPage(pageID, event) {
     this.setState({ checkedPageID: pageID });
-    this.props.getPageIDFromMenu({ checkedPageID: pageID });
+    this.props.getPageIDFromMenu(pageID);
   }
 
   setInitialCheckedPageData() {
