@@ -60,7 +60,7 @@ class App extends Component {
     const { pagesData } = this.state;
     return (
       <BarMenu
-        pagesData={pagesData} 
+        pagesData={pagesData}
         getPageIDFromMenu={this.setPageID}
       />
     );
