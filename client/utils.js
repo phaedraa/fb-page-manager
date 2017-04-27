@@ -38,6 +38,18 @@ export default {
       }
     );
   },
+  getBasicPageInfo: function(pageID, callback) {
+    FB.api(
+      '/' + pageID + '/?fields=picture,about,name',
+      function (response) {
+        callback({
+          url: response.picture.data.url,
+          about: response.about,
+          name: response.name
+        });
+      }
+    )
+  },
   publishPost: function(pageID, data) {
     FB.api(
       '/' + pageID + '/feed',

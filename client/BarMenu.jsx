@@ -9,19 +9,14 @@ export default class BarMenu extends Component {
   constructor(props) {
     super(props);
     this.getCheckedPageData = this.getCheckedPageData.bind(this);
-    this.state = { checkedPageID: null, checkedPageName: null };
+    this.state = { checkedPageID: null };
   }
 
   getCheckedPageData() {
-    if (_.isArray(this.props.pagesData) && (!this.state.checkedPageID ||
-      !this.state.checkedPageName)
-    ) {
-      return {
-        checkedPageID: this.props.pagesData[0].id,
-        checkedPageName: this.props.pagesData[0].name
-      };
+    if (_.isArray(this.props.pagesData) && !this.state.checkedPageID) {
+      return his.props.pagesData[0].id;
     }
-    return this.state;
+    return this.state.checkedPageID;
   }
 
   componentWillMount() {
@@ -31,20 +26,13 @@ export default class BarMenu extends Component {
     }
   }
 
-  getSelectedPage(pageID, pageName, event) {
-    this.setState({ checkedPageID: pageID, checkedPageName: pageName });
-    this.props.getPageIDFromMenu({
-      checkedPageID: pageID,
-      checkedPageName: pageName
-    });
+  getSelectedPage(pageID, event) {
+    this.setState({ checkedPageID: pageID });
+    this.props.getPageIDFromMenu({ checkedPageID: pageID });
   }
 
   setInitialCheckedPageData() {
-    var data = this.getCheckedPageData();
-    this.setState({ 
-      checkedPageID: data.checkedPageID,
-      checkedPageName: data.checkedPageName
-    });
+    this.setState({ checkedPageID: this.getCheckedPageData() });
   }
 
   render() {
@@ -66,7 +54,7 @@ export default class BarMenu extends Component {
               primaryText={page.name}
               key={page.id}
               checked={page.id === this.state.checkedPageID}
-              onTouchTap={this.getSelectedPage.bind(this, page.id, page.name)}
+              onTouchTap={this.getSelectedPage.bind(this, page.id)}
             />
           )
         }

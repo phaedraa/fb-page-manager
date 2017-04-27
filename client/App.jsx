@@ -17,6 +17,7 @@ class App extends Component {
     super(props);
     this.checkLoginState = this.checkLoginState.bind(this);
     this.userInfoReceived = this.userInfoReceived.bind(this);
+    this.pageInfoReceived = this.pageInfoReceived.bind(this);
     this.userPagesDataReceived = this.userPagesDataReceived.bind(this);
     this.setPageID = this.setPageID.bind(this);
     this.state = { isLoggedIn: false };
@@ -51,11 +52,8 @@ class App extends Component {
     });
   }
 
-  setPageID(data) {
-    this.setState({
-      pageID: data.checkedPageID,
-      pageName: data.checkedPageName
-    });
+  setPageID(id) {
+    this.setState({ pageID: id });
   }
 
   getMenu() {
@@ -88,18 +86,34 @@ class App extends Component {
     );
   }
 
+  pageInfoReceived(data) {
+    this.setState({
+      pagePhotoURL: data.url || '',
+      pageAbout: data.about || ''
+    });
+  }
+
+  getPageInfo() {
+    if (!this.state.pageID) {
+      return (<b>Select a page with which to work.</b>);
+    }
+    
+    utils.getBasicPageInfo(this.state.pageID, this.pageInfoReceived);
+    //var testAvatarURL = "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/12191835_890554757718779_6359650367402484387_n.png?_nc_log=1&oh=ef554e74238eec74f4eb701f80aa4bab&oe=5986933C";
+    return (
+      <Card>
+        <CardHeader
+          avatar={this.state.pagePhotoURL}
+          title={this.state.pageName}
+          subtitle={this.state.pageAbout}
+        />
+      </Card>
+    );
+  }
+
   getPageInfoCard() {
     if (this.state.isLoggedIn) {
-      var testAvatarURL = "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/12191835_890554757718779_6359650367402484387_n.png?_nc_log=1&oh=ef554e74238eec74f4eb701f80aa4bab&oe=5986933C";
-      return this.state.pageName
-        ? (<Card>
-            <CardHeader
-              avatar={testAvatarURL}
-              title={this.state.pageName}
-              subtitle={'Some test description'}
-            />
-          </Card>)
-        : (<h1>Select a page with which to work.</h1>);
+      return this.getPageInfo();
     }
 
     return <Subheader>{this.getWelcomeText()}</Subheader>
