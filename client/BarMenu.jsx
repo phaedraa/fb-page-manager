@@ -41,7 +41,7 @@ export default class BarMenu extends Component {
 
   setInitialCheckedPageData() {
     var data = this.getCheckedPageData();
-    this.setState({ 
+    this.setState({
       checkedPageID: data.checkedPageID,
       checkedPageName: data.checkedPageName
     });
@@ -57,8 +57,8 @@ export default class BarMenu extends Component {
         iconButtonElement={
           <IconButton><MoreVertIcon /></IconButton>
         }
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        targetOrigin={{ vertical: 'top', horizontal: 'left' }}
       >
         {
           this.props.pagesData.map((page) =>
