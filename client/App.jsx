@@ -89,7 +89,8 @@ class App extends Component {
   pageInfoReceived(data) {
     this.setState({
       pagePhotoURL: data.url || '',
-      pageAbout: data.about || ''
+      pageAbout: data.about || '',
+      pageName: data.name || ''
     });
   }
 
