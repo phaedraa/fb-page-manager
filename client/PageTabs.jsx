@@ -22,7 +22,6 @@ export default class PageTabs extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.setPageData = this.setPageData.bind(this);
-    this.fetchAndSetPostData = this.fetchAndSetPostData.bind(this);
     this.state = {
       slideIndex: 0,
       publishedPosts: null,
@@ -43,12 +42,13 @@ export default class PageTabs extends React.Component {
     });
   }
 
-  fetchAndSetPostData() {
-    utils.getPagePosts(this.props.pageID, this.setPageData);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.pageID !== nextProps.pageID) {
+      utils.getPagePosts(this.props.pageID, this.setPageData);
+    }
   }
 
   render() {
-    this.fetchAndSetPostData();
     return (
       <div>
         <Tabs
