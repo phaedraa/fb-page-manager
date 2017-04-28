@@ -43,7 +43,11 @@ export default class PageTabs extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.pageID !== nextProps.pageID) {
+    if (
+      this.props.pageID !== nextProps.pageID ||
+      (this.state.publishedPosts === null &&
+        this.state.unpublishedPosts === null)
+    ) {
       utils.getPagePosts(this.props.pageID, this.setPageData);
     }
   }
