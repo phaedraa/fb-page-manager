@@ -1,7 +1,9 @@
-import React from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import _ from 'lodash';
+import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import PostAttachment from './PostAttachment';
+import React from 'react';
+import ReactionCounts from './ReactionCounts';
 import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 
@@ -12,9 +14,16 @@ export default class PagePost extends React.Component {
     this.getAttachmentMedia = this.getAttachmentMedia.bind(this);
     this.getCreatedAtAnchoredText = this.getCreatedAtAnchoredText.bind(this);
     this.getCreatedByText = this.getCreatedByText.bind(this);
+    this.getDetailedReactionsDiv = this.getDetailedReactionsDiv.bind(this);
     this.getKey = this.getKey.bind(this);
+    this.getNumReactions = this.getNumReactions.bind(this);
     this.getReactionsDiv = this.getReactionsDiv.bind(this);
-    this.state = { hover: false, expanded: false };
+    this.state = {
+      hover: false,
+      expanded: false,
+      insights: null,
+      showDetailedInsights: false
+    };
   };
 
   handleExpandChange(expanded) {
@@ -24,6 +33,10 @@ export default class PagePost extends React.Component {
   handleToggle(event, toggle) {
     this.setState({expanded: toggle});
   };
+
+  handleGetDetailedInsights(event) {
+    this.setState({ showDetailedInsights: !this.state.showDetailedInsights });
+  }
 
   getCreatedAtAnchoredText() {
     var timestamp = moment(this.props.createdAt);
@@ -70,11 +83,22 @@ export default class PagePost extends React.Component {
     });
   }
 
+  getNumReactions() {
+    return !this.props.reactions || this.props.reactions.length < 1
+      ? "0"
+      : this.props.reactions.length;
+  }
+
   getReactionsDiv() {
-    var numReactions = !this.props.numReactions ? "0" : this.props.numReactions;
     return (
-      <div><br/><b>{numReactions} Reaction(s)</b></div>
+      <div><br/><b>{this.getNumReactions()} Reaction(s)</b></div>
     );
+  }
+
+  getDetailedReactionsDiv() {
+    if (this.state.showDetailedInsights) {
+      return <ReactionCounts reactions={this.props.reactions} />;
+    }
   }
 
   toggleHover(){
@@ -110,8 +134,13 @@ export default class PagePost extends React.Component {
         </CardText>
         {this.getAttachmentMedia()}
         <CardActions>
-          <FlatButton label="Detailed Insights" />
+          <RaisedButton
+            label="Detailed Insights"
+            primary={true}
+            onTouchTap={this.handleGetDetailedInsights.bind(this)}
+          />
         </CardActions>
+        {this.getDetailedReactionsDiv()}
       </Card>
     );
   }
