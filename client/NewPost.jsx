@@ -34,7 +34,6 @@ function getTimeErrorIcon(showIcon) {
 export default class NewPost extends React.Component {
   constructor(props) {
     super(props);
-    //this.getTimeErrorIcon = this.getTimeErrorIcon.bind(this);
     this.state = { expanded: false, isPastTimeSelected: false };
   };
 

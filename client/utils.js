@@ -49,6 +49,16 @@ export default {
     }
     FB.api(url, parsePageInfo);
   },
+  getPagePostInsights: function(
+    pagePostID /* format: pageID_postID */,
+    callback
+  ) {
+    const url = '/' + pagePostID + '/insights/page_posts_impressions_unique';
+    const parsePagePostData = (response) => {
+      callback(response.data);
+    }
+    FB.api(url, parsePagePostData);
+  },
   publishPost: function(pageID, data) {
     FB.api(
       '/' + pageID + '/feed',

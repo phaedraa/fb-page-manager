@@ -5,6 +5,7 @@ import PostAttachment from './PostAttachment';
 import React from 'react';
 import ReactionCounts from './ReactionCounts';
 import Toggle from 'material-ui/Toggle';
+import utils from './utils';
 import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 
 export default class PagePost extends React.Component {
@@ -18,6 +19,7 @@ export default class PagePost extends React.Component {
     this.getKey = this.getKey.bind(this);
     this.getNumReactions = this.getNumReactions.bind(this);
     this.getReactionsDiv = this.getReactionsDiv.bind(this);
+    this.pagePostDataReceived = this.pagePostDataReceived.bind(this);
     this.state = {
       hover: false,
       expanded: false,
@@ -25,6 +27,14 @@ export default class PagePost extends React.Component {
       showDetailedInsights: false
     };
   };
+
+  pagePostDataReceived(data) {
+    this.setState({ insights: data });
+  }
+
+  componentDidMount() {
+    utils.getPagePostInsights(this.props.id, this.pagePostDataReceived);  
+  }
 
   handleExpandChange(expanded) {
     this.setState({expanded: expanded});
