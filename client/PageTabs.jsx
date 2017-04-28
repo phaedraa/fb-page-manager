@@ -70,10 +70,16 @@ export default class PageTabs extends React.Component {
         >
           <div>
             <br />
-            <PagePosts postData={this.state.publishedPosts || []} />
+            <PagePosts
+              postData={this.state.publishedPosts || []}
+              isForPublishedPosts={true}
+            />
           </div>
           <div style={styles.slide}>
-            <PagePosts postData={this.state.unpublishedPosts || []} />
+            <PagePosts
+              postData={this.state.unpublishedPosts || []}
+              isForPublishedPosts={false}
+            />
           </div>
           <div style={styles.slide}>
             Create NEW Post!

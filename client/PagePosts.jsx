@@ -6,13 +6,23 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 export default class PagePosts extends React.Component {
   constructor(props) {
     super(props);
+    this.getNoPostMessaging = this.getNoPostMessaging.bind(this);
+  }
+
+  getNoPostMessaging() {
+    if (!this.props.isForPublishedPosts) {
+      return (
+        <div><b>No scheduled posts. Schedule one in the Create New Post tab!</b></div>
+      );
+    }
+    return (
+      <div><b>No posts to display. Create one in the Create New Post tab!</b></div>
+    );
   }
 
   render() {
     if (!this.props.postData || this.props.postData.length < 1) {
-      return (
-        <div><b>No posts to display. Create your first!</b></div>
-      );
+      return this.getNoPostMessaging();
     }
 
     return (
