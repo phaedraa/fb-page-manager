@@ -1,13 +1,14 @@
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
+import ReportProblem from 'material-ui/svg-icons/action/report-problem';
+import SvgIcon from 'material-ui/SvgIcon';
 import TextField from 'material-ui/TextField';
 import TimePicker from 'material-ui/TimePicker';
 import Toggle from 'material-ui/Toggle';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import utils from './utils';
 import {blue500, red500, greenA200} from 'material-ui/styles/colors';
-import SvgIcon from 'material-ui/SvgIcon';
-import ReportProblem from 'material-ui/svg-icons/action/report-problem';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 const iconStyles = {
   marginRight: 24,
@@ -34,7 +35,12 @@ function getTimeErrorIcon(showIcon) {
 export default class NewPost extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expanded: false, isPastTimeSelected: false };
+    this.state = {
+      expanded: false,
+      failedSubmit: false,
+      isPastTimeSelected: false,
+      postText: '',
+    };
   };
 
   handleExpandChange(expanded) {
@@ -64,6 +70,45 @@ export default class NewPost extends React.Component {
     }
 
     return date.getTime() <= currentTime.getTime()
+  }
+
+  getErrorText() {
+    if (!this.state.postText && this.state.failedSubmit) {
+      return 'Not so fast! Say something first!';
+    }
+  }
+
+  handleTextChange(event) {
+    this.setState({
+      postText: event.target.value
+    });
+  }
+
+  handleSubmitPost(event) {
+    if (!this.state.postText) {
+      this.setState({ failedSubmit: true });
+    } else {
+      utils.publishPost(
+        this.props.pageID,
+        {
+          message: this.state.postText,
+        },
+      );
+    }
+  }
+
+  handleSavePost(event) {
+    if (!this.state.postText) {
+      this.setState({ failedSubmit: true });
+    } else {
+      utils.publishPost(
+        this.props.pageID,
+        {
+          message: this.state.postText,
+        },
+        false /* save: publish later */
+      );
+    }
   }
 
   render() {
@@ -100,13 +145,22 @@ export default class NewPost extends React.Component {
         </CardText>
         <TextField
           hintText="Hint Text"
-          errorText="Not so fast! Say something first!"
+          errorText={this.getErrorText()}
           multiLine={true}
           rows={4}
           rowsMax={4}
-        /><br />
+          onChange={this.handleTextChange.bind(this)}
+        />
+        <br />
         <CardActions>
-          <RaisedButton label="Submit" />
+          <RaisedButton
+            label="Submit"
+            onTouchTap={this.handleSubmitPost.bind(this)}
+          />
+          <RaisedButton
+            label="Save Draft"
+            onTouchTap={this.handleSavePost.bind(this)}
+          />
         </CardActions>
       </Card>
     );

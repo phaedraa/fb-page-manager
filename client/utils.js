@@ -59,13 +59,29 @@ export default {
     }
     FB.api(url, parsePagePostData);
   },
-  publishPost: function(pageID, data) {
-    FB.api(
-      '/' + pageID + '/feed',
-      'post',
-      data,
+  publishPost: function(pageID, data, publishNow=true, publishTime=null) {
+    //var url = '/' + pageID + '/feed?';
+    //if (!publishNow) {
+    //  url += 'published=false&amp;message=' + data.message;
+    //  if (publishTime) {
+    //    url += 'scheduled_publish_time=' + publishTime;
+    //  }
+    //}
+    //var token = "EAACEdEose0cBAHtGc8JoveuRgUrZBwyBZBoYhS6vZCkqu4E8Tdg4h1llKN4ZBj5aTeSDRSDNZCDcz6tam1XWbJjftapJVPAAkHs2nS1EBPlo8yl5Fo4PmCoAByWZA9f6oGi4siXuRdeoopoAesqgFAFGfke9sDKfCS0Wa1uRZAqKJh4IZBxvZA51WY5qUmNEuMiZCYxKMBoKJgzwZDZD";
+    var dataObj = {
+      message: data.message,
+      link: data.link,
+      picture: data.picture,
+      published: publishNow,
+      //accessToken: token
+    };
+    if (publishTime) {
+      dataObj.scheduled_publish_time = publishTime;
+    }
+    FB.api('/' + pageID + '/feed', 'post', dataObj,
       function (response) {
-        //console.log('published: ', response);
+        debugger;
+        console.log('response: ', response);
       }
     );
   }
