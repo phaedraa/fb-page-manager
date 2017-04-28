@@ -39,16 +39,15 @@ export default {
     FB.api(url, parsePosts);
   },
   getBasicPageInfo: function(pageID, callback) {
-    FB.api(
-      '/' + pageID + '/?fields=picture,about,name',
-      function (response) {
-        callback({
-          url: response.picture.data.url,
-          about: response.about,
-          name: response.name
-        });
-      }
-    )
+    const url = '/' + pageID + '/?fields=picture,about,name';
+    const parsePageInfo = (response) => {
+      callback({
+        url: response.picture.data.url,
+        about: response.about,
+        name: response.name
+      });
+    }
+    FB.api(url, parsePageInfo);
   },
   publishPost: function(pageID, data) {
     FB.api(

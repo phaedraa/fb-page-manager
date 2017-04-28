@@ -100,7 +100,6 @@ class App extends Component {
     }
     
     utils.getBasicPageInfo(this.state.pageID, this.pageInfoReceived);
-    //var testAvatarURL = "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/12191835_890554757718779_6359650367402484387_n.png?_nc_log=1&oh=ef554e74238eec74f4eb701f80aa4bab&oe=5986933C";
     return (
       <Card>
         <CardHeader
