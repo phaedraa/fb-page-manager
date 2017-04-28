@@ -4,6 +4,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import utils from './utils';
 import PagePosts from './PagePosts';
+import NewPost from './NewPost';
 
 const styles = {
   headline: {
