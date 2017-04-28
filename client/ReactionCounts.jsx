@@ -14,7 +14,7 @@ export default class ReactionCounts extends React.Component {
     var text = '';
     _.forEach(
       reactionCounts,
-      function (value, key) { text += value + ' ' + key + '\'s; '; }
+      function (value, key) { text += key + '\'s: ' + value + '; '; }
     );
     return text;
   }
