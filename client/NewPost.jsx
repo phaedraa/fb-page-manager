@@ -1,5 +1,5 @@
 import DatePicker from 'material-ui/DatePicker';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import TimePicker from 'material-ui/TimePicker';
@@ -106,7 +106,7 @@ export default class NewPost extends React.Component {
           rowsMax={4}
         /><br />
         <CardActions>
-          <FlatButton label="Submit" />
+          <RaisedButton label="Submit" />
         </CardActions>
       </Card>
     );
