@@ -35,11 +35,14 @@ function getTimeErrorIcon(showIcon) {
 export default class NewPost extends React.Component {
   constructor(props) {
     super(props);
+    this.getPublishTime = this.getPublishTime.bind(this);
     this.state = {
       expanded: false,
       failedSubmit: false,
       isPastTimeSelected: false,
       postText: '',
+      time: null,
+      date: null
     };
   };
 
@@ -53,10 +56,16 @@ export default class NewPost extends React.Component {
 
   disablePastTime(event, date) {
     var isPastTime = date.getTime() <= (new Date()).getTime();
-    this.setState({
-      isPastTimeSelected: isPastTime
-    });
-    debugger;
+    this.setState({ isPastTimeSelected: isPastTime });
+    if (!isPastTime) {
+      this.setState({ time: date.getTime() });
+    }
+  }
+
+  handleDateChange(event, date) {
+    if (!this.disablePastDate(date)) {
+      this.setState({ date: date.getTime() });
+    }
   }
 
   disablePastDate(date) {
@@ -84,15 +93,23 @@ export default class NewPost extends React.Component {
     });
   }
 
+  getPublishTime() {
+    if (this.state.time && this.state.date) {
+      // do something;
+    }
+    return null;
+  }
+
   handleSubmitPost(event) {
     if (!this.state.postText) {
       this.setState({ failedSubmit: true });
     } else {
+      var publishTime = this.getPublishTime();
       utils.publishPost(
         this.props.pageID,
-        {
-          message: this.state.postText,
-        },
+        { message: this.state.postText },
+        true,
+        publishTime
       );
     }
   }
@@ -133,6 +150,7 @@ export default class NewPost extends React.Component {
         <CardText expandable={true}>
           <DatePicker
             hintText="Pick a date"
+            onChange={this.handleDateChange.bind(this)}
             shouldDisableDate={this.disablePastDate.bind(this)}
           />
         </CardText>
