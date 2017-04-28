@@ -82,7 +82,7 @@ export default class PageTabs extends React.Component {
             />
           </div>
           <div style={styles.slide}>
-            Create NEW Post!
+            <NewPost />
           </div>
         </SwipeableViews>
       </div>
