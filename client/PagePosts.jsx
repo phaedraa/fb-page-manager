@@ -9,6 +9,12 @@ export default class PagePosts extends React.Component {
   }
 
   render() {
+    if (!this.props.postData || this.props.postData.length < 1) {
+      return (
+        <div><b>No posts to display. Create your first!</b></div>
+      );
+    }
+
     return (
       <div>
         {
