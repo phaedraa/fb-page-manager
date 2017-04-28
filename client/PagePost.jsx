@@ -17,6 +17,7 @@ export default class PagePost extends React.Component {
     this.getCreatedByText = this.getCreatedByText.bind(this);
     this.getDetailedReactionsDiv = this.getDetailedReactionsDiv.bind(this);
     this.getKey = this.getKey.bind(this);
+    this.getMessage = this.getMessage.bind(this);
     this.getNumReactions = this.getNumReactions.bind(this);
     this.getReactionsDiv = this.getReactionsDiv.bind(this);
     this.pagePostDataReceived = this.pagePostDataReceived.bind(this);
@@ -46,6 +47,12 @@ export default class PagePost extends React.Component {
 
   handleGetDetailedInsights(event) {
     this.setState({ showDetailedInsights: !this.state.showDetailedInsights });
+  }
+
+  getMessage() {
+    return this.props.message
+      ? this.props.message
+      : (<b>No text for this post.</b>);
   }
 
   getCreatedAtAnchoredText() {
@@ -130,7 +137,7 @@ export default class PagePost extends React.Component {
           subtitle={this.getCreatedByText()}
         />
         <CardText expandable={false}>
-          {this.props.message}
+          {this.getMessage()}
         </CardText>
         <CardTitle
           actAsExpander={true}
