@@ -79,7 +79,11 @@ export default class PagePost extends React.Component {
 
   getAttachmentMedia() {
     if (!(this.props.attachments.data && this.props.attachments.data.length > 0)) {
-      return null;
+      return (
+        <CardText expandable={true}>
+          <b>No Attachments</b>
+        </CardText>
+      );
     }
     
     return this.props.attachments.data.map((attachment, idx) => {
