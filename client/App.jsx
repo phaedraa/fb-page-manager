@@ -101,7 +101,7 @@ class App extends Component {
     if (!this.state.pageID) {
       return (<b>Select a page with which to work.</b>);
     }
-    
+
     utils.getBasicPageInfo(this.state.pageID, this.pageInfoReceived);
     return (
       <Card>
