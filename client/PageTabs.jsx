@@ -46,22 +46,18 @@ export default class PageTabs extends React.Component {
     this.setState({ unpublishedPosts: postData });
   }
 
+  componentDidMount() {
+    this.fetchPageData(this.props.pageID);
+  }
+
+  fetchPageData(pageID) {
+    utils.getPublishedPagePosts(pageID, this.setPublishedPostsData);
+    utils.getUnpublishedPagePosts(pageID, this.setUnpublishedPostsData);
+  }
+
   componentWillReceiveProps(nextProps) {
-    debugger;
-    if (this.props.pageID !== nextProps.pageID || this.state.firstClassCall) {
-      this.state.firstClassCall = false;
-      if (this.state.publishedPosts === null) {
-        utils.getPublishedPagePosts(
-          this.props.pageID, 
-          this.setPublishedPostsData,
-        );
-      }
-      if (this.state.unpublishedPosts === null) {
-        utils.getUnpublishedPagePosts(
-          this.props.pageID, 
-          this.setUnpublishedPostsData,
-        );
-      }
+    if (this.props.pageID !== nextProps.pageID) {
+      this.fetchPageData(nextProps.pageID)
     }
   }
 
