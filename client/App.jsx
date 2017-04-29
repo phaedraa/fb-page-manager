@@ -20,7 +20,7 @@ class App extends Component {
     this.pageInfoReceived = this.pageInfoReceived.bind(this);
     this.userPagesDataReceived = this.userPagesDataReceived.bind(this);
     this.setPageID = this.setPageID.bind(this);
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: false, isPageIDChanged: false, pageID: null };
   }
 
   componentWillMount() {
@@ -53,7 +53,10 @@ class App extends Component {
   }
 
   setPageID(id) {
-    this.setState({ pageID: id });
+    if (this.state.pageID !== id) {
+      this.state.isPageIDChanged = true;
+      this.setState({ pageID: id });
+    }
   }
 
   getMenu() {
