@@ -107,8 +107,8 @@ class App extends Component {
             iconElementLeft={this.getMenu()}
           />
           <PageInfoCard isLoggedIn={isLoggedIn} pageID={pageID} />
-          <div>{this.getPageNavBar()}</div>
-          <div>{this.getFBLoginButton()}</div>
+          {this.getPageNavBar()}
+          {this.getFBLoginButton()}
         </div>
       </MuiThemeProvider>
     );
