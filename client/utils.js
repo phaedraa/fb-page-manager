@@ -20,22 +20,18 @@ export default {
       //console.log("auth_status_change_callback: " + response.status);
     }
   },
-  getPagePosts: function(pageID, callback) {
-    var posts = {unpublished: [], published: []};
+  getPublishedPagePosts: function(pageID, callback) {
     const url = '/' + pageID +
       '/posts?fields=message,created_time,is_published,' +
       'reactions,permalink_url,admin_creator,attachments';
-    const parsePosts = (response) => {
-      var data = response.data;
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].is_published) {
-          posts.published.push(data[i]);
-        } else {
-          posts.unpublished.push(data[i]);
-        }
-      }
-      callback(posts);
-    }
+    const parsePosts = (response) => { callback(response.data); }
+    FB.api(url, parsePosts);
+  },
+  getUnpublishedPagePosts: function(pageID, callback) {
+    const url = '/' + pageID + '/promotable_posts?fields=id,message,' +
+    'created_time,is_published,reactions,permalink_url,admin_creator,' +
+    'attachments&is_published=false';
+    const parsePosts = (response) => { callback(response.data); }
     FB.api(url, parsePosts);
   },
   getBasicPageInfo: function(pageID, callback) {

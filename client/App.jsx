@@ -140,7 +140,7 @@ class App extends Component {
         callback={this.checkLoginState}
         fields="name,email,picture"
         cssClass="my-facebook-button"
-        scope="publish_actions,manage_pages,read_insights,public_profile,email"
+        scope="publish_actions,manage_pages,read_insights,public_profile,email,read_stream"
       ></FacebookLogin>
     );
   }

@@ -22,8 +22,10 @@ export default class PageTabs extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.setPageData = this.setPageData.bind(this);
+    this.setPublishedPostsData = this.setPublishedPostsData.bind(this);
+    this.setUnpublishedPostsData = this.setUnpublishedPostsData.bind(this);
     this.state = {
+      firstClassCall: true,
       slideIndex: 0,
       publishedPosts: null,
       unpublishedPosts: null
@@ -36,20 +38,30 @@ export default class PageTabs extends React.Component {
     });
   }
 
-  setPageData(postData) {
-    this.setState({
-      publishedPosts: postData.published,
-      unpublishedPosts: postData.unpublished
-    });
+  setPublishedPostsData(postData) {
+    this.setState({ publishedPosts: postData });
+  }
+
+  setUnpublishedPostsData(postData) {
+    this.setState({ unpublishedPosts: postData });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      this.props.pageID !== nextProps.pageID ||
-      (this.state.publishedPosts === null &&
-        this.state.unpublishedPosts === null)
-    ) {
-      utils.getPagePosts(this.props.pageID, this.setPageData);
+    debugger;
+    if (this.props.pageID !== nextProps.pageID || this.state.firstClassCall) {
+      this.state.firstClassCall = false;
+      if (this.state.publishedPosts === null) {
+        utils.getPublishedPagePosts(
+          this.props.pageID, 
+          this.setPublishedPostsData,
+        );
+      }
+      if (this.state.unpublishedPosts === null) {
+        utils.getUnpublishedPagePosts(
+          this.props.pageID, 
+          this.setUnpublishedPostsData,
+        );
+      }
     }
   }
 
