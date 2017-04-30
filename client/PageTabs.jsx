@@ -28,22 +28,22 @@ export default class PageTabs extends React.Component {
       firstClassCall: true,
       slideIndex: 0,
       publishedPosts: null,
-      unpublishedPosts: null
+      unpublishedPosts: null,
+      isFetchingPublished: true,
+      isFetchingUnpublished: true
     };
   }
 
   handleChange(value) {
-    this.setState({
-      slideIndex: value,
-    });
+    this.setState({ slideIndex: value });
   }
 
   setPublishedPostsData(postData) {
-    this.setState({ publishedPosts: postData });
+    this.setState({ publishedPosts: postData, isFetchingPublished: false });
   }
 
   setUnpublishedPostsData(postData) {
-    this.setState({ unpublishedPosts: postData });
+    this.setState({ unpublishedPosts: postData, isFetchingUnpublished: false });
   }
 
   componentDidMount() {
@@ -51,6 +51,10 @@ export default class PageTabs extends React.Component {
   }
 
   fetchPageData(pageID) {
+    this.setState({
+      isFetchingPublished: true,
+      isFetchingUnpublished: true
+    });
     utils.getPublishedPagePosts(pageID, this.setPublishedPostsData);
     utils.getUnpublishedPagePosts(pageID, this.setUnpublishedPostsData);
   }
@@ -77,16 +81,17 @@ export default class PageTabs extends React.Component {
           onChangeIndex={this.handleChange}
         >
           <div>
-            <br />
             <PagePosts
               postData={this.state.publishedPosts || []}
               isForPublishedPosts={true}
+              isFetching={this.state.isFetchingPublished}
             />
           </div>
           <div style={styles.slide}>
             <PagePosts
               postData={this.state.unpublishedPosts || []}
               isForPublishedPosts={false}
+              isFetching={this.state.isFetchingUnpublished}
             />
           </div>
           <div style={styles.slide}>
