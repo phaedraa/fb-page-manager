@@ -28,39 +28,40 @@ export default class PageTabs extends React.Component {
       firstClassCall: true,
       slideIndex: 0,
       publishedPosts: null,
-      unpublishedPosts: null
+      unpublishedPosts: null,
+      isFetchingPublished: true,
+      isFetchingUnpublished: true
     };
   }
 
   handleChange(value) {
-    this.setState({
-      slideIndex: value,
-    });
+    this.setState({ slideIndex: value });
   }
 
   setPublishedPostsData(postData) {
-    this.setState({ publishedPosts: postData });
+    this.setState({ publishedPosts: postData, isFetchingPublished: false });
   }
 
   setUnpublishedPostsData(postData) {
-    this.setState({ unpublishedPosts: postData });
+    this.setState({ unpublishedPosts: postData, isFetchingUnpublished: false });
+  }
+
+  componentDidMount() {
+    this.fetchPageData(this.props.pageID);
+  }
+
+  fetchPageData(pageID) {
+    this.setState({
+      isFetchingPublished: true,
+      isFetchingUnpublished: true
+    });
+    utils.getPublishedPagePosts(pageID, this.setPublishedPostsData);
+    utils.getUnpublishedPagePosts(pageID, this.setUnpublishedPostsData);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.pageID !== nextProps.pageID || this.state.firstClassCall) {
-      this.state.firstClassCall = false;
-      if (this.state.publishedPosts === null) {
-        utils.getPublishedPagePosts(
-          this.props.pageID, 
-          this.setPublishedPostsData,
-        );
-      }
-      if (this.state.unpublishedPosts === null) {
-        utils.getUnpublishedPagePosts(
-          this.props.pageID, 
-          this.setUnpublishedPostsData,
-        );
-      }
+    if (this.props.pageID !== nextProps.pageID) {
+      this.fetchPageData(nextProps.pageID)
     }
   }
 
@@ -80,16 +81,17 @@ export default class PageTabs extends React.Component {
           onChangeIndex={this.handleChange}
         >
           <div>
-            <br />
             <PagePosts
               postData={this.state.publishedPosts || []}
               isForPublishedPosts={true}
+              isFetching={this.state.isFetchingPublished}
             />
           </div>
           <div style={styles.slide}>
             <PagePosts
               postData={this.state.unpublishedPosts || []}
               isForPublishedPosts={false}
+              isFetching={this.state.isFetchingUnpublished}
             />
           </div>
           <div style={styles.slide}>
