@@ -50,35 +50,32 @@ export default {
     callback
   ) {
     const url = '/' + pagePostID + '/insights/page_posts_impressions_unique';
-    const parsePagePostData = (response) => {
-      callback(response.data);
-    }
+    const parsePagePostData = (response) => { callback(response.data); }
     FB.api(url, parsePagePostData);
   },
-  publishPost: function(pageID, data, publishNow=true, publishTime=null) {
-    //var url = '/' + pageID + '/feed?';
-    //if (!publishNow) {
-    //  url += 'published=false&amp;message=' + data.message;
-    //  if (publishTime) {
-    //    url += 'scheduled_publish_time=' + publishTime;
-    //  }
-    //}
-    //var token = "EAACEdEose0cBAHtGc8JoveuRgUrZBwyBZBoYhS6vZCkqu4E8Tdg4h1llKN4ZBj5aTeSDRSDNZCDcz6tam1XWbJjftapJVPAAkHs2nS1EBPlo8yl5Fo4PmCoAByWZA9f6oGi4siXuRdeoopoAesqgFAFGfke9sDKfCS0Wa1uRZAqKJh4IZBxvZA51WY5qUmNEuMiZCYxKMBoKJgzwZDZD";
-    var dataObj = {
-      message: data.message,
-      link: data.link,
-      picture: data.picture,
-      published: publishNow,
-      //accessToken: token
-    };
-    if (publishTime) {
-      dataObj.scheduled_publish_time = publishTime;
+  publishOrSavePost: function(pageID, data, publishNow, publishTime) {
+    if (!data.link && !data.message) {
+      throw new Error("Must enter at least a message or a link!");
     }
-    FB.api('/' + pageID + '/feed', 'post', dataObj,
-      function (response) {
-        debugger;
-        console.log('response: ', response);
-      }
+    publishNow = publishNow || publishNow === null || publishNow === undefined;
+    if (publishNow && publishTime) {
+      throw new Error("Cannot publish now and in the future!");
+    }
+
+    FB.api(
+      builURLForAPI(),
+      'post',
+      function (response) { console.log(response.id || response.error); }
     );
+
+    function builURLForAPI() {
+      var url = '/' + pageID + '/feed?';
+      url += 'published=' + publishNow + '&';
+      url += data.message ? 'message=' + data.message + '&' : '';
+      url += data.link ? 'link=' + data.link + '&' : '';
+      url += publishTime ? 'scheduled_publish_time=' + publishTime + '&' : '';
+      url += 'access_token=' + data.accessToken;
+      return url;
+    }
   }
 };

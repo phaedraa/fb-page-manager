@@ -47,7 +47,6 @@ export default class PageTabs extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (this.props.pageID !== nextProps.pageID || this.state.firstClassCall) {
       this.state.firstClassCall = false;
       if (this.state.publishedPosts === null) {
@@ -94,7 +93,10 @@ export default class PageTabs extends React.Component {
             />
           </div>
           <div style={styles.slide}>
-            <NewPost pageID={this.props.pageID} />
+            <NewPost
+              pageID={this.props.pageID}
+              accessToken={this.props.accessToken}
+            />
           </div>
         </SwipeableViews>
       </div>

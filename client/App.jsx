@@ -18,6 +18,7 @@ class App extends Component {
     this.checkLoginState = this.checkLoginState.bind(this);
     this.userInfoReceived = this.userInfoReceived.bind(this);
     this.userPagesDataReceived = this.userPagesDataReceived.bind(this);
+    this.getAccessTokensFromPagesData = this.getAccessTokensFromPagesData.bind(this);
     this.setPageID = this.setPageID.bind(this);
     this.state = { isLoggedIn: false, isPageIDChanged: false, pageID: null };
   }
@@ -35,9 +36,19 @@ class App extends Component {
     });
   }
 
+  getAccessTokensFromPagesData(data) {
+    var accessTokens = {};
+    for (var i = 0; i < data.length; i++) {
+      accessTokens[data[i].id] = data[i].access_token;
+    }
+    return accessTokens;
+  }
+
   userPagesDataReceived(userPagesData) {
+    var data = userPagesData.data;
     this.setState({
-      pagesData: userPagesData.data,
+      pagesData: data,
+      accessTokens: this.getAccessTokensFromPagesData(data)
     });
   }
 
@@ -78,7 +89,12 @@ class App extends Component {
 
   getPageNavBar() {
     if (this.state.isLoggedIn && this.state.pageID) {
-      return <PageTabs pageID={this.state.pageID}/>
+      return (
+        <PageTabs
+          pageID={this.state.pageID}
+          accessToken={this.state.accessTokens[this.state.pageID]}
+        />
+      );
     }
     return null;
   }
@@ -94,7 +110,7 @@ class App extends Component {
         callback={this.checkLoginState}
         fields="name,email,picture"
         cssClass="my-facebook-button"
-        scope="publish_actions,manage_pages,read_insights,public_profile,email,read_stream"
+        scope="manage_pages,publish_pages,read_insights,public_profile,email"
       ></FacebookLogin>
     );
   }
