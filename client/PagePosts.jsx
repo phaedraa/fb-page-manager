@@ -12,11 +12,15 @@ export default class PagePosts extends Component {
   getNoPostMessaging() {
     if (!this.props.isForPublishedPosts) {
       return (
-        <div><b>No scheduled posts. Schedule one in the Create New Post tab!</b></div>
+        <div>
+          <b>No scheduled posts. Schedule one in the Create New Post tab!</b>
+        </div>
       );
     }
     return (
-      <div><b>No posts to display. Create one in the Create New Post tab!</b></div>
+      <div>
+        <b>No posts to display. Create one in the Create New Post tab!</b>
+      </div>
     );
   }
 
