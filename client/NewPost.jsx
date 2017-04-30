@@ -119,7 +119,6 @@ export default class NewPost extends React.Component {
     if (!this.state.time || !this.state.date) {
       return null;
     }
-    debugger;
     var date = new Date(this.state.date);
     var publishTimeInSec = this.dateIsToday(date)
       ? this.state.time
@@ -128,7 +127,6 @@ export default class NewPost extends React.Component {
   }
 
   shouldNotSubmit() {
-    debugger;
     return (!this.state.postText && !this.state.url) ||
       (this.state.date && !this.state.time) ||
       (this.state.time && !this.state.date);
