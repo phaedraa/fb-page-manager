@@ -118,8 +118,18 @@ export default class PagePost extends React.Component {
     );
   }
 
+  getDetailedInsightsButton() {
+    return this.props.isForPublishedPosts
+      ? (<RaisedButton
+          label="Detailed Insights"
+          primary={true}
+          onTouchTap={this.handleGetDetailedInsights.bind(this)}
+        />)
+      : null;
+  }
+
   getDetailedReactionsDiv() {
-    if (this.state.showDetailedInsights) {
+    if (this.state.showDetailedInsights && this.props.isForPublishedPosts) {
       return <ReactionCounts reactions={this.props.reactions} />;
     }
   }
@@ -157,11 +167,7 @@ export default class PagePost extends React.Component {
         </CardText>
         {this.getAttachmentMedia()}
         <CardActions>
-          <RaisedButton
-            label="Detailed Insights"
-            primary={true}
-            onTouchTap={this.handleGetDetailedInsights.bind(this)}
-          />
+          {this.getDetailedInsightsButton()}
         </CardActions>
         {this.getDetailedReactionsDiv()}
       </Card>

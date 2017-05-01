@@ -32,6 +32,7 @@ export default class PagePosts extends Component {
             <PagePost
               key={post.id}
               id={post.id}
+              isForPublishedPosts={this.props.isForPublishedPosts}
               createdAt={post.created_time}
               message={post.message || ''}
               reactions={(post.reactions && post.reactions.data) || []}
