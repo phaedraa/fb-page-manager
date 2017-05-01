@@ -33,8 +33,10 @@ export default class PagePost extends React.Component {
     this.setState({ insights: data });
   }
 
-  componentDidMount() {
-    // utils.getPagePostInsights(this.props.id, this.pagePostDataReceived);  
+  componentWillReceiveProps(nextProps) {
+    //if (nextProps.id && nextProps.id !== this.props.id) {
+    //  utils.getPagePostInsights(this.props.id, this.pagePostDataReceived);  
+    //}
   }
 
   handleExpandChange(expanded) {
