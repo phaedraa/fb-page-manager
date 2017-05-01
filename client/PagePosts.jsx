@@ -12,15 +12,11 @@ export default class PagePosts extends Component {
   getNoPostMessaging() {
     if (!this.props.isForPublishedPosts) {
       return (
-        <div>
-          <b>No scheduled posts. Schedule one in the Create New Post tab!</b>
-        </div>
+        <b>No scheduled posts. Schedule one in the Create New Post tab!</b>
       );
     }
     return (
-      <div>
-        <b>No posts to display. Create one in the Create New Post tab!</b>
-      </div>
+      <b>No posts to display. Create one in the Create New Post tab!</b>
     );
   }
 
@@ -48,21 +44,21 @@ export default class PagePosts extends Component {
   }
 
   render() {
-    if (!this.props.postData || this.props.postData.length < 1) {
-      return this.getNoPostMessaging();
-    }
     const style = {
       display: 'flex',
       justifyContent: 'center',
       marginTop: '100px'
     };
+    if (this.props.isFetching) {
+      return (<div style={style}><CircularProgress /></div>);
+    }
 
     return (
       <div className='page-posts-container'>
         {
-          this.props.isFetching ?
-          <div style={style}><CircularProgress /></div> :
-          this.renderPosts()
+          !this.props.postData || this.props.postData.length < 1
+            ? this.getNoPostMessaging()
+            : this.renderPosts()
         }
       </div>
     );
