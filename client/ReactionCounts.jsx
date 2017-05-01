@@ -16,7 +16,7 @@ export default class ReactionCounts extends React.Component {
       reactionCounts,
       function (value, key) { text += key + '\'s: ' + value + '; '; }
     );
-    return text;
+    return text.slice(0, text.length - 2);
   }
 
   getReactionsTextFromCounts() {
